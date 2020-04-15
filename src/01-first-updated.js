@@ -3,6 +3,17 @@
 import { LitElement, html } from 'lit-element';
 
 class FirstUpdated extends LitElement {
+    static get properties() {
+        return {
+          amount: { type: Number },
+        };
+      }
+
+      constructor() {
+        super();
+        // default values can be set from the constructor
+        //this.amount = 0;
+      }
 
   render() {
     return html`
@@ -10,6 +21,9 @@ class FirstUpdated extends LitElement {
         Auto focused: <input id="amountInput" type="number" name="amount">
         <button>Submit button</button>
       </form>
+      <div>
+      Got amount ${this.amount}
+      </div>
     `;
   }
 
@@ -20,6 +34,10 @@ class FirstUpdated extends LitElement {
   // In general using pure functions and declarative templates through the render function
   // is preferred. Use this only if there is no other way.
   firstUpdated(changedProperties) {
+
+    const params = new URLSearchParams(document.location.search);
+    this.amount = params.get('amount')
+
     // Store a reference to the form element for easy access
     this._form = this.shadowRoot.getElementById('form');
 
